@@ -83,7 +83,7 @@ const Cart = () => {
               />
               <img
                 onClick={() => updateQuantity(item._id, item.size, 0)}
-                className="w-4 bg-amber-500 mr-4  cursor-pointer"
+                className="w-4  mr-4  cursor-pointer"
                 src={assets.bin_icon}
                 alt=""
               />
