@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage';
 import React, { useContext, useState } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
@@ -7,6 +8,7 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 
 const PlaceOrder = () => {
+  const { t } = useLanguage();
 
   const [method , setMethod] = useState('cod');
   const {navigate , backendUrl , token , cartItems , setCartItems , delivery_fee, getCartAmount , products } = useContext(ShopContext);
@@ -33,8 +35,8 @@ const PlaceOrder = () => {
       key:import.meta.env.VITE_RAZORPAY_KEY_ID ,
       amount:order.amount ,
       currency:order.currency ,
-      name:'Order Payment' , 
-      description:'Order Payment' , 
+      name:t('Order Payment') ,
+      description:t('Order Payment') ,
       order_id: order.id ,
       receipt: order.receipt , 
       handler:async (response)=>{
@@ -47,7 +49,7 @@ const PlaceOrder = () => {
           }
         } catch (error) {
           console.log(error);
-          toast.error(error)
+          toast.error(t(error))
           
         }
       }
@@ -87,7 +89,7 @@ const PlaceOrder = () => {
             setCartItems({})
             navigate('/orders')
           } else{
-            toast.error(response.data.message)
+            toast.error(t(response.data.message))
           }
         break;
 
@@ -97,7 +99,7 @@ const PlaceOrder = () => {
               const {session_url} = responseStripe.data
               window.location.replace(session_url)
             } else{
-              toast.error(responseStripe.data.message)
+              toast.error(t(responseStripe.data.message))
             }
         break;
 
@@ -112,7 +114,7 @@ const PlaceOrder = () => {
 
     } catch (error) {
        console.log(error);
-       toast.error(error.message)
+       toast.error(t(error.message))
     }
   }
 
@@ -122,26 +124,26 @@ const PlaceOrder = () => {
       {/* -------- Left Side --------- */}
        <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
           <div className='text-xl sm:text-2xl my-3'>
-            <Title text1={'DELIVERY'} text2={'INFORMATION'} />
+            <Title text1={t("DELIVERY")} text2={t("INFORMATION")} />
           </div>
 
           <div className='flex gap-3'>
-            <input required onChange={onChangeHandler} name='firstName' value={formData.firstName} type="text" placeholder='First name' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-            <input required onChange={onChangeHandler} name='lastName' value={formData.lastName} type="text" placeholder='Last name' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='firstName' value={formData.firstName} type="text" placeholder={t("First name")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='lastName' value={formData.lastName} type="text" placeholder={t("Last name")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
           </div>
-            <input required onChange={onChangeHandler} name='email' value={formData.email} type="email" placeholder='Email Address' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-            <input required onChange={onChangeHandler} name='street' value={formData.street} type="text" placeholder='Street' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='email' value={formData.email} type="email" placeholder={t("Email Address")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='street' value={formData.street} type="text" placeholder={t("Street")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
 
             <div className='flex gap-3'>
-            <input required onChange={onChangeHandler} name='city' value={formData.city} type="text" placeholder='City' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-            <input required onChange={onChangeHandler} name='state' value={formData.state} type="text" placeholder='State' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='city' value={formData.city} type="text" placeholder={t("City")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='state' value={formData.state} type="text" placeholder={t("State")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
           </div>
 
           <div className='flex gap-3'>
-            <input required onChange={onChangeHandler} name='zipcode' value={formData.zipcode} type="number" placeholder='Zipcode' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-            <input required onChange={onChangeHandler} name='country' value={formData.country} type="text" placeholder='Country' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='zipcode' value={formData.zipcode} type="text" placeholder={t("Zipcode")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='country' value={formData.country} type="text" placeholder={t("Country")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
           </div>
-            <input required onChange={onChangeHandler} name='phone' value={formData.phone} type="number" placeholder='Phone' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+            <input required onChange={onChangeHandler} name='phone' value={formData.phone} type="tel" placeholder={t("Phone")} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
        </div>
               {/* ------------ Right Side -------------- */}
        <div className='mt-8 '>
@@ -150,7 +152,7 @@ const PlaceOrder = () => {
           </div>
 
           <div className="mt-12">
-             <Title text1={'PAYMENT'} text2={'METHOD'} />
+             <Title text1={t("PAYMENT")} text2={t("METHOD")} />
              {/* --- Payment Method Selection --- */}
              <div className='flex gap-3 flex-col lg:flex-row'>
                   <div onClick={()=>setMethod('stripe')} className="flex items-center gap-3 border p-2 px-3 cursor-pointer ">
@@ -163,11 +165,11 @@ const PlaceOrder = () => {
                   </div>
                   <div onClick={()=>setMethod('cod')} className="flex items-center gap-3 border p-2 px-3 cursor-pointer ">
                     <p className={ `min-w-3.5 h-3.5 border rounded-full ${method==='cod' ? 'bg-green-400' : ''}`}>  </p>
-                    <p className='tetx-gray-500 text-sm font-medium mx-4'>CASH ON DELIVERY</p>
+                    <p className='tetx-gray-500 text-sm font-medium mx-4'>{t("CASH ON DELIVERY")}</p>
                   </div>
              </div>
              <div className='w-full text-end mt-8'>
-                  <button type='submit' className='bg-black text-white px-16 py-3 text-sm'> PLACE ORDER</button>
+                  <button type='submit' className='bg-black text-white px-16 py-3 text-sm'> {t("PLACE ORDER")}</button>
              </div>
           </div>
        </div>

@@ -9,6 +9,8 @@ const produdctSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  nameFa: { type: String, default: '' },
+  descriptionFa: { type: String, default: '' },
   price: {
     type: Number,
     required: true,

@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage';
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {useNavigate} from 'react-router-dom';
@@ -6,6 +7,7 @@ import axios from 'axios'
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
+  const { t } = useLanguage();
   const currency = "$";
   const delivery_fee = 10;
   const backendUrl = import.meta.env.VITE_BACKEND_URL
@@ -19,7 +21,7 @@ const ShopContextProvider = (props) => {
 
   const addToCart = async (itemId, size) => {
     if (!size) {
-      toast.error("Select Product Size");
+      toast.error(t("Select Product Size"));
       return;
     }
 
@@ -42,7 +44,7 @@ const ShopContextProvider = (props) => {
       await axios.post(backendUrl + '/api/cart/add' , {itemId , size}, {headers:{token}})
      } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(t(error.message))
       
      }
     }
@@ -73,7 +75,7 @@ const ShopContextProvider = (props) => {
         await axios.post(backendUrl + '/api/cart/update' , {itemId , size , quantity} , {headers:{token}})
       } catch (error) {
          console.log(error);
-         toast.error(error.message)
+         toast.error(t(error.message))
       }
     }
   };
@@ -100,12 +102,12 @@ const ShopContextProvider = (props) => {
         setProducts(response.data.products)
         
       } else {
-        toast.error(response.data.message)
+        toast.error(t(response.data.message))
       }
       
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(t(error.message))
       
     }
   }
@@ -118,7 +120,7 @@ const ShopContextProvider = (props) => {
       }
     } catch (error) {
        console.log(error);
-       toast.error(error.message)
+       toast.error(t(error.message))
     }
   }
 

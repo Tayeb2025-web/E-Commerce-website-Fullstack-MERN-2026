@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage';
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
@@ -5,6 +6,7 @@ import { assets } from "../assets/assets.js";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
+  const { t, localizeProduct } = useLanguage();
   const { products, currency, cartItems, updateQuantity, navigate } =
     useContext(ShopContext);
 
@@ -31,7 +33,7 @@ const Cart = () => {
   return (
     <div className="border-t pt-14">
       <div className="text-2xl mb-3">
-        <Title text1={"YOUR"} text2={"CART"} />
+        <Title text1={t("YOUR")} text2={t("CART")} />
       </div>
 
       <div className="">
@@ -53,7 +55,7 @@ const Cart = () => {
                 />
                 <div>
                   <p className="text-sm sm:text-lg font-medium">
-                    {productData.name}
+                    {localizeProduct(productData)}
                   </p>
                   <div className="flex items-center gap-5 mt-2">
                     <p>
@@ -83,7 +85,7 @@ const Cart = () => {
               />
               <img
                 onClick={() => updateQuantity(item._id, item.size, 0)}
-                className="w-4  mr-4  cursor-pointer"
+                className="w-4  me-4  cursor-pointer"
                 src={assets.bin_icon}
                 alt=""
               />
@@ -98,9 +100,7 @@ const Cart = () => {
             <button
               onClick={() => navigate("/place-order")}
               className="bg-black text-white text-sm my-8 px-8 py-3"
-            >
-              PROCEED TO CHECKOUT
-            </button>
+            > {t("PROCEED TO CHECKOUT")} </button>
           </div>
         </div>
       </div>

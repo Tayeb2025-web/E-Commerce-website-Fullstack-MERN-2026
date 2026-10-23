@@ -1,3 +1,4 @@
+import { useLanguage } from './i18n/useLanguage';
 import React from 'react'
 import {Routes , Route } from 'react-router-dom'
 import Home from './pages/Home'
@@ -17,9 +18,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify'
 
 const App = () => {
+  const { isRTL } = useLanguage();
   return (
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
-      <ToastContainer  />
+      <ToastContainer rtl={isRTL} position={isRTL ? "top-left" : "top-right"} />
       <Navbar/>
       <SearchBar/>
       <Routes>

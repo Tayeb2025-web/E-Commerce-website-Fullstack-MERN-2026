@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage';
 import React from "react";
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
@@ -7,6 +8,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const Verify = () => {
+  const { t } = useLanguage();
   const { navigate, token, setCartItems, backendUrl } =
     useContext(ShopContext);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +35,7 @@ const Verify = () => {
       }
     } catch (error) {
         console.log(error);
-        toast.error(error.message)
+        toast.error(t(error.message))
         
     }
   };

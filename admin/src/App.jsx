@@ -1,3 +1,4 @@
+import { useLanguage } from './i18n/useLanguage';
 import React from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -15,6 +16,7 @@ export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const currency = '$'
 
 const App = () => {
+  const { isRTL } = useLanguage();
   const [token, setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'): '');
   
   useEffect(()=>{
@@ -24,7 +26,7 @@ const App = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <ToastContainer />
+      <ToastContainer rtl={isRTL} position={isRTL ? "top-left" : "top-right"} />
       {token === "" ? (
         <Login setToken={setToken} />
       ) : (
@@ -34,7 +36,7 @@ const App = () => {
 
           <div className="flex w-full">
             <Sidebar />
-            <div className="w-[70%] mx-auto ml-[max(5vw , 25px)] text-base my-8 text-gray-600">
+            <div className="w-[70%] mx-auto ms-[max(5vw , 25px)] text-base my-8 text-gray-600">
               <Routes>
                 <Route path="/add" element={<Add token={token}  />} />
                 <Route path="/list" element={<List token={token} />} />

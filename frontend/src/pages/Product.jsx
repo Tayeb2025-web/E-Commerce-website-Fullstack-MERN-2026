@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage';
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
@@ -5,6 +6,7 @@ import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
+  const { t, localizeProduct } = useLanguage();
   const { productId } = useParams();
   const { products, currency , addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
@@ -50,24 +52,24 @@ const Product = () => {
         {/* ------------- Product Info -------------- */}
 
         <div className="flex-1 ">
-          <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
+          <h1 className="font-medium text-2xl mt-2">{localizeProduct(productData)}</h1>
           <div className="flex items-center gap-1 mt-2">
             <img src={assets.star_icon} alt="" className="w-3 " />
             <img src={assets.star_icon} alt="" className="w-3 " />
             <img src={assets.star_icon} alt="" className="w-3 " />
             <img src={assets.star_icon} alt="" className="w-3 " />
             <img src={assets.star_dull_icon} alt="" className="w-3 " />
-            <p className="pl-2">(122)</p>
+            <p className="ps-2">(122)</p>
           </div>
           <p className="mt-5 text-3xl font-bold">
             {currency}
             {productData.price}
           </p>
           <p className="mt-5 text-gray-500 md:w-4/5">
-            {productData.description}
+            {localizeProduct(productData, 'description')}
           </p>
           <div className="flex flex-col gap-4 my-8">
-            <p>Select Size</p>
+            <p>{t("Select Size")}</p>
             <div className="flex gap-2">
               {productData.sizes.map((item, index) => (
                 <button
@@ -81,14 +83,12 @@ const Product = () => {
               ))}
             </div>
           </div>
-          <button onClick={()=>addToCart(productData._id , size)} className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700">
-            ADD TO CART
-          </button>
+          <button onClick={()=>addToCart(productData._id , size)} className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"> {t("ADD TO CART")} </button>
           <hr className="mt-8 sm:w-4/5 " />
           <div className="text-sm text-gray-500 flex mt-5 flex-col gap-1">
-            <p>100% Original product.</p>
-            <p>Cash on delivery is available on this product. </p>
-            <p>Easy return and exchange policy within 7 days.</p>
+            <p>{t("100% Original product.")}</p>
+            <p>{t("Cash on delivery is available on this product.")} </p>
+            <p>{t("Easy return and exchange policy within 7 days.")}</p>
           </div>
         </div>
       </div>
@@ -96,22 +96,12 @@ const Product = () => {
       {/* ---------- Description & Review Section --------- */}
       <div className="mt-20">
         <div className="flex">
-          <b className="border px-5 text-sm py-3">Description</b>
-          <p className="border px-5 py-3 text-sm">Reviews (324)</p>
+          <b className="border px-5 text-sm py-3">{t("Description")}</b>
+          <p className="border px-5 py-3 text-sm">{t("Reviews (324)")}</p>
         </div>
         <div className="flex flex-col gap-4 border px-6 text-sm text-gray-500">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora
-            adipisci iusto obcaecati fugit illo magnam, ipsam dicta repudiandae
-            possimus unde dolor optio nulla ut molestiae? Ipsa earum sit neque
-            hic.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            quibusdam voluptates vitae quasi corrupti incidunt sequi rem beatae
-            reiciendis consectetur unde doloribus fugit obcaecati explicabo
-            veniam, rerum ipsa tempora aliquid.
-          </p>
+          <p> {t("Check the product details and available sizes before placing your order.")} </p>
+          <p> {t("For help choosing a size or learning about delivery, please contact our support team.")} </p>
         </div>
       </div>
 

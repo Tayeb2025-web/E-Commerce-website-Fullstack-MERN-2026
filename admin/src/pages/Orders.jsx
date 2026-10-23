@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage';
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { toast } from "react-toastify";
 import { assets } from "../assets/assets";
 
 const Orders = ({ token }) => {
+  const { t, localizeProduct, formatDate } = useLanguage();
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
@@ -22,10 +24,10 @@ const Orders = ({ token }) => {
       if (response.data.success) {
         setOrders(response.data.orders.reverse());
       } else {
-        toast.error(response.data.message);
+        toast.error(t(response.data.message));
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(t(error.message));
     }
   };
 
@@ -38,7 +40,7 @@ const Orders = ({ token }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(response.data.message)
+      toast.error(t(error.message))
       
     }
   }
@@ -49,7 +51,7 @@ const Orders = ({ token }) => {
 
   return (
     <div>
-      <h3>Order Page</h3>
+      <h3>{t("Order Page")}</h3>
       <div>
         {orders.map((order, index) => (
           <div className="grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700" key={index}>
@@ -60,13 +62,13 @@ const Orders = ({ token }) => {
                   if (index === order.items.length - 1) {
                     return (
                       <p className="py-0.5" key={index}>
-                        {item.name} X {item.quantity} <span>{item.size}</span>
+                        {localizeProduct(item)} X {item.quantity} <span>{item.size}</span>
                       </p>
                     );
                   } else {
                     return (
                       <p className="py-0.5" key={index}>
-                        {item.name} X {item.quantity} <span>{item.size}</span>{" "}
+                        {localizeProduct(item)} X {item.quantity} <span>{item.size}</span>{" "}
                         ,{" "}
                       </p>
                     );
@@ -89,18 +91,18 @@ const Orders = ({ token }) => {
               <p>{order.address.phone}</p>
             </div>
             <div>
-              <p className="text-sm sm:text-[15px]">Items:{order.items.length}</p>
-              <p className="mt-3">Method:{order.paymentMethod}</p>
-              <p>Payment: {order.payment ? 'Done' : 'pending'}</p>
-              <p>Date:{new Date(order.date).toLocaleDateString()}</p>
+              <p className="text-sm sm:text-[15px]">{t("Items:")}{order.items.length}</p>
+              <p className="mt-3">{t("Method:")}{t(order.paymentMethod)}</p>
+              <p>{t("Payment:")} {t(order.payment ? 'Done' : 'pending')}</p>
+              <p>{t("Date:")}{formatDate(order.date)}</p>
             </div>
             <p className="text-sm sm:text-[15px]">{currency} {order.amount}</p>
             <select onChange={(e)=> statusHandler(e , order._id)} value={order.status } className="p-2 font-semibold">
-              <option value="Order Placed">Order Placed</option>
-              <option value="Packing">Packing</option>
-              <option value="Shipped">Shipped</option>
-              <option value="Out for delivery">Out for delivery</option>
-              <option value="Delivered">Delivered</option>
+              <option value="Order Placed">{t("Order Placed")}</option>
+              <option value="Packing">{t("Packing")}</option>
+              <option value="Shipped">{t("Shipped")}</option>
+              <option value="Out for delivery">{t("Out for delivery")}</option>
+              <option value="Delivered">{t("Delivered")}</option>
             </select>
           </div>
         ))}

@@ -7,6 +7,8 @@ const addProduct = async (req, res) => {
     const {
       name,
       description,
+      nameFa,
+      descriptionFa,
       price,
       category,
       subCategory,
@@ -30,7 +32,9 @@ const addProduct = async (req, res) => {
 
     const productData = {
         name , 
-        description , 
+        description ,
+        nameFa: typeof nameFa === 'string' ? nameFa.trim() : '',
+        descriptionFa: typeof descriptionFa === 'string' ? descriptionFa.trim() : '',
         category , 
         price:Number(price) ,
         subCategory , 

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Outfit:wght@100..900&family=Prata&display=swap");
 @import "tailwindcss";
 
 
@@ -15,3 +15,15 @@ select , input , textarea{
   outline-color: #c586a5;
   border-radius: 4px;
 }
+html[lang="fa"] {
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+}
+html[lang="fa"] *, html[lang="fa"] .prata-regular {
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+}
+html[lang="fa"] { line-height: 1.8; }
+input[type="email"], input[type="tel"], input[type="number"] {
+  direction: ltr;
+  text-align: start;
+}
+input, select, textarea { min-width: 0; }
